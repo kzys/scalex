@@ -1,5 +1,7 @@
 # Hoogle-like documentation search engine for scala library.
 
+[![Build Status](https://travis-ci.org/kzys/scalex.svg?branch=master)](https://travis-ci.org/kzys/scalex)
+
 - [See it in action](http://scalex.org)
 
 - Read the [HTTP API documentation](https://github.com/ornicar/scalex/blob/master/http-api-documentation.md)
