@@ -3,4 +3,4 @@ scala:
   - 2.10.3
 script:
   - sbt test
-  - sbt "run index scalex 3.0.0 $PWD/src/main/scala"
+  - sbt "run index scalex 3.0.0 -input-dir $PWD/src/main/scala"
