@@ -13,7 +13,7 @@ trait Resolvers {
 }
 
 trait Dependencies {
-  val compiler = "org.scala-lang" % "scala-compiler" % "2.10.3"
+  val compiler = "org.scala-lang" % "scala-compiler" % "2.10.5"
   val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.4"
   val scalazContrib = "org.typelevel" %% "scalaz-contrib-210" % "0.1.5"
   val config = "com.typesafe" % "config" % "1.0.2"
@@ -43,7 +43,7 @@ object ScalexBuild extends Build with Resolvers with Dependencies {
     organization := "org.scalex",
     name := "scalex",
     version := "3.0-SNAPSHOT",
-    scalaVersion := "2.10.3",
+    scalaVersion := "2.10.5",
     libraryDependencies := Seq(config),
     // libraryDependencies in test := Seq(specs2),
     sources in doc in Compile := List(),
