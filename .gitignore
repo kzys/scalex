@@ -6,3 +6,4 @@ databases
 application.conf
 sbt-launch.jar
 *.scalex
+data/
