@@ -1,6 +1,10 @@
+env:
+  SBT_OPTS: -Dfile.encoding=utf-8
 language: scala
 scala:
   - 2.10.5
 script:
-  - sbt test
+  - sbt clean coverage test
   - sbt "run index scalex 3.0.0 -input-dir $PWD/src/main/scala"
+after_success:
+  - sbt coveralls

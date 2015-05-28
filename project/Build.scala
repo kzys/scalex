@@ -44,7 +44,7 @@ object ScalexBuild extends Build with Resolvers with Dependencies {
     name := "scalex",
     version := "3.0-SNAPSHOT",
     scalaVersion := "2.10.5",
-    libraryDependencies := Seq(config),
+    libraryDependencies ++= Seq(config),
     // libraryDependencies in test := Seq(specs2),
     sources in doc in Compile := List(),
     resolvers := Seq(typesafe, typesafeS, sonatype, sonatypeS, iliaz, mandubian),
