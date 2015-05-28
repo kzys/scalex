@@ -1,8 +1,6 @@
 package org.scalex
 package search
 
-import semverfi.Version
-
 import model.Project
 import query.Scope
 

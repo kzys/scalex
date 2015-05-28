@@ -6,7 +6,7 @@ import scala.util.{ Try, Success, Failure }
 
 import scalaz.NonEmptyList
 
-import model.Project
+import model.{ Project, Version }
 
 case class Area(
     name: ProjectName,
@@ -16,7 +16,7 @@ case class Area(
 
   def covers(p: Project): Boolean = name == p.name && covers(p.version)
 
-  def covers(v: semverfi.Valid): Boolean =
+  def covers(v: Version): Boolean =
     List(v.major, v.minor, v.patch).zipWithIndex forall {
       case (vv, pos) ⇒ compare(pos, vv)
     }

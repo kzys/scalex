@@ -3,23 +3,21 @@ package model
 
 import scala.util.{ Try, Success, Failure }
 
-import semverfi.{ Version, Valid, SemVersion, NormalVersion }
-
 case class Project(
     name: ProjectId,
-    version: Valid,
+    version: Version,
     scaladocUrl: Option[String]) {
 
   def id: ProjectId = name + "_" + version.shows
 
   def fullName = name + " " + version.shows
 
-  def versionMatch(v: NormalVersion) = (version, v) match {
+  def versionMatch(v: Version) = (version, v) match {
 
     case (a, b) ⇒ a == b
   }
 
-  def semVersion: SemVersion = version
+  def semVersion = version
 
   override def toString = id
 
@@ -31,11 +29,11 @@ case class Project(
   lazy val tokenize: List[Token] = name :: version.shows :: Nil
 }
 
-object Project extends Function3[ProjectId, Valid, Option[String], Project] {
+object Project extends Function3[ProjectId, Version, Option[String], Project] {
 
   def apply(name: String, version: String, url: Option[String]): Try[Project] =
-    Version(version) match {
-      case semverfi.Invalid(raw) ⇒ Failure(new InvalidProjectVersionException(raw))
-      case v: Valid              ⇒ Success(Project(name, v, url))
+    Version.parse(version) match {
+      case Right(v) => Success(Project(name, v, url))
+      case Left(e)  => Failure(new InvalidProjectVersionException(e.getMessage))
     }
 }

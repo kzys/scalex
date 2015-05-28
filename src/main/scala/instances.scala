@@ -46,15 +46,6 @@ private[scalex] trait instances {
     }
   }
 
-  implicit final class ScalexVersion(v: semverfi.Valid) {
-
-    def normal = semverfi.NormalVersion(v.major, v.minor, v.patch)
-  }
-
-  implicit def ScalexShowSemVersion: Show[semverfi.Valid] = Show.shows {
-    version ⇒ semverfi.Show(version: semverfi.SemVersion)
-  }
-
   implicit final class ScalexAny[A](any: A) {
 
     def asTry(cond: Boolean, error: ⇒ Exception): Try[A] =

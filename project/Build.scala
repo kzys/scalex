@@ -19,7 +19,6 @@ trait Dependencies {
   val config = "com.typesafe" % "config" % "1.3.0"
   val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
   val sbinary = "org.scala-tools.sbinary" % "sbinary_2.10" % "0.4.2"
-  val semver = "me.lessis" %% "semverfi" % "0.1.3"
   val elastic4s = "com.sksamuel.elastic4s" %% "elastic4s" % "0.90.5.5"
   val tiscaf = "org.gnieh" %% "tiscaf" % "0.8"
   object akka {
@@ -61,7 +60,8 @@ object ScalexBuild extends Build with Resolvers with Dependencies {
 
   lazy val scalex = Project("scalex", file("."), settings = buildSettings).settings(
     libraryDependencies ++= Seq(
-      compiler, config, scalaz, scalazContrib, semver,
+      compiler, config, scalaz, scalazContrib,
+      "com.github.zafarkhaja" % "java-semver" % "0.9.0",
       scopt, sbinary, elastic4s, akka.actor, play.json,
       apache.io, specs2, tiscaf)
   )
