@@ -14,26 +14,26 @@ trait Resolvers {
 
 trait Dependencies {
   val compiler = "org.scala-lang" % "scala-compiler" % "2.10.5"
-  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.4"
+  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.7"
   val scalazContrib = "org.typelevel" %% "scalaz-contrib-210" % "0.1.5"
-  val config = "com.typesafe" % "config" % "1.0.2"
-  val scopt = "com.github.scopt" %% "scopt" % "3.1.0"
+  val config = "com.typesafe" % "config" % "1.3.0"
+  val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
   val sbinary = "org.scala-tools.sbinary" % "sbinary_2.10" % "0.4.2"
   val semver = "me.lessis" %% "semverfi" % "0.1.3"
   val elastic4s = "com.sksamuel.elastic4s" %% "elastic4s" % "0.90.5.5"
   val tiscaf = "org.gnieh" %% "tiscaf" % "0.8"
   object akka {
-    val version = "2.2.3"
-    val actor = "com.typesafe.akka" %% "akka-actor" % version
+    val actor = "com.typesafe.akka" %% "akka-actor" % "2.3.11"
   }
   object play {
-    val version = "2.2.1"
-    val json = "com.typesafe.play" %% "play-json" % version
+    val json = "com.typesafe.play" %% "play-json" % "2.3.9"
   }
   object apache {
     val io = "commons-io" % "commons-io" % "2.4"
   }
+
   val specs2 = "org.specs2" %% "specs2" % "2.3.1" % "test"
+  // or "org.specs2" %% "specs2-core" % "3.6" % "test"
 }
 
 object ScalexBuild extends Build with Resolvers with Dependencies {
@@ -43,11 +43,14 @@ object ScalexBuild extends Build with Resolvers with Dependencies {
     organization := "org.scalex",
     name := "scalex",
     version := "3.0-SNAPSHOT",
-    scalaVersion := "2.10.5",
+    scalaVersion := "2.10.5", // or "2.11.6"
     libraryDependencies ++= Seq(config),
     // libraryDependencies in test := Seq(specs2),
     sources in doc in Compile := List(),
-    resolvers := Seq(typesafe, typesafeS, sonatype, sonatypeS, iliaz, mandubian),
+    resolvers := Seq(
+      typesafe, typesafeS, sonatype, sonatypeS, iliaz, mandubian,
+      "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
+    ),
     scalacOptions := Seq("-deprecation", "-unchecked", "-feature", "-language:_"),
     publishTo := Some(Resolver.sftp(
       "iliaz",
