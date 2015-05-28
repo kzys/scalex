@@ -13,7 +13,7 @@ case class Env(
 
   def shutdown { 
     println("Scalex env shutdown")
-    system.shutdown 
+    system.shutdown
   }
 }
 
