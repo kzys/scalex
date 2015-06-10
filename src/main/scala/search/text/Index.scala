@@ -2,8 +2,8 @@ package org.scalex
 package search
 package text
 
-import com.sksamuel.elastic4s.{ FieldDefinition, ElasticDsl => ES }
-import com.sksamuel.elastic4s.FieldType._
+import com.sksamuel.elastic4s.{ ElasticDsl => ES }
+import com.sksamuel.elastic4s.mapping.FieldType._
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
@@ -35,7 +35,7 @@ private[text] object Index extends org.scalex.util.ScalexJson {
     val memberEntity = member + "." + entity
   }
 
-  def mapping: List[FieldDefinition] = List(
+  def mapping = List(
     ES.field(f.name) typed StringType boost 1
     // field(f.member) as (
     //   f.entity boost 2

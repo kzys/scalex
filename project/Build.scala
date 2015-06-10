@@ -19,7 +19,7 @@ trait Dependencies {
   val config = "com.typesafe" % "config" % "1.3.0"
   val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
   val sbinary = "org.scala-tools.sbinary" % "sbinary_2.10" % "0.4.2"
-  val elastic4s = "com.sksamuel.elastic4s" %% "elastic4s" % "0.90.5.5"
+  val elastic4s = "com.sksamuel.elastic4s" %% "elastic4s" % "0.90.13.2"
   object akka {
     val actor = "com.typesafe.akka" %% "akka-actor" % "2.3.11"
   }
