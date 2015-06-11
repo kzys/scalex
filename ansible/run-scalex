@@ -1,0 +1,6 @@
+#! /bin/bash
+kill $(ps ax | grep /usr/bin/sbt | awk '{ print $1 }')
+sleep 5
+
+cd ~/scalex
+nohup /usr/bin/sbt 'run --listen 8000' &

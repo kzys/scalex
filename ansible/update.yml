@@ -1,0 +1,27 @@
+- hosts: scalex-servers
+  remote_user: ec2-user
+  tasks:
+  - name: Install Nginx
+    sudo: yes
+    yum: name=nginx state=present
+  - name: Rewrite nginx.conf
+    template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+    sudo: yes
+  - service: name=nginx state=reloaded
+    sudo: yes
+  - name: Use Bintray's RPM repository
+    sudo: yes
+    copy: src=bintray-sbt-rpm.repo dest=/etc/yum.repos.d/
+  - name: Install sbt to use Scala
+    sudo: yes
+    yum: name=sbt state=present
+  - name: Install Java 8
+    sudo: yes
+    yum: name=java-1.8.0-openjdk state=present
+  - name: Use Java 8 as default
+    sudo: yes
+    command: update-alternatives --set java /usr/lib/jvm/jre-1.8.0-openjdk.x86_64/bin/java
+  - name: Clone scalex
+    git: repo=https://github.com/kzys/scalex.git dest=~ec2-user/scalex
+  - copy: src=run-scalex dest=~ec2-user mode=u+x
+  - command: ~ec2-user/run-scalex
