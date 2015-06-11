@@ -41,7 +41,7 @@ trait SequentialActor extends Actor {
   private case object Done
 
   private def fallback: ReceiveAsync = {
-    case work ⇒ fuccess()
+    case work ⇒ fuccess(())
   }
 
   private def processThenDone(work: Any) {

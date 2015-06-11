@@ -13,14 +13,15 @@ private[scalex] object json {
     (__ \ "html").format[Option[String]] 
   )(Block.apply, unlift(Block.unapply))
 
-  implicit val commentFormat = (
+  // TODO - Does it really need "default"?
+  implicit val commentFormat: OFormat[Comment] = (
     (__ \ "body").format[Block].default and
     (__ \ "summary").format[Option[Block]].default and
     (__ \ "see").format[List[Block]].default and
     (__ \ "result").format[Option[Block]].default and
-    (__ \ "throws").format[Map[String, Block]].default and
-    (__ \ "valueParams").format[Map[String, Block]].default and
-    (__ \ "typeParams").format[Map[String, Block]].default and
+    (__ \ "throws").format[Map[String, Block]] and
+    (__ \ "valueParams").format[Map[String, Block]] and
+    (__ \ "typeParams").format[Map[String, Block]] and
     (__ \ "version").format[Option[Block]].default and
     (__ \ "since").format[Option[Block]].default and
     (__ \ "todo").format[List[Block]].default and

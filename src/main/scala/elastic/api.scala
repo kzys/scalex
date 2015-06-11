@@ -3,7 +3,7 @@ package elastic
 
 import akka.actor.ActorRef
 import com.sksamuel.elastic4s.ElasticClient
-import com.sksamuel.elastic4s.source.Source
+import com.sksamuel.elastic4s.source.DocumentSource
 import com.sksamuel.elastic4s.{ ElasticDsl ⇒ ES }
 import org.elasticsearch.action.ActionRequest
 import org.elasticsearch.action.search.SearchResponse
@@ -19,7 +19,7 @@ private[scalex] object api {
 
   case class Optimize(typeName: Type)
 
-  case class IndexMany(typeName: Type, docs: List[(String, Source)])
+  case class IndexMany(typeName: Type, docs: List[(String, DocumentSource)])
 
   case class ThenDo(f: ActorRef ⇒ Fu[_])
 

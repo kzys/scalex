@@ -9,6 +9,7 @@ import akka.actor._
 import akka.pattern.{ ask, pipe }
 import com.sksamuel.elastic4s.ElasticClient
 import com.sksamuel.elastic4s.{ ElasticDsl ⇒ ES }
+import com.sksamuel.elastic4s.ElasticDsl._
 import com.typesafe.config.Config
 import org.elasticsearch.action.search.SearchResponse
 import play.api.libs.json.{ Json, JsObject }
@@ -53,11 +54,12 @@ private[scalex] final class ElasticActor(
 
     case api.Optimize ⇒ client execute { ES optimize indexName } pipeTo sender
 
-    case api.IndexMany(typeName, docs) ⇒ client bulk {
-      (docs map {
-        case (id, source) ⇒ ES.index into s"$indexName/$typeName" id id source source
-      }): _*
-    }
+    case api.IndexMany(typeName, docs) ⇒
+      val commands = docs map {
+        case (id, source) ⇒
+          ES.index into s"$indexName/$typeName" fields("id" -> id, "source" -> source)
+      }
+      client execute { bulk(commands: _*) }
 
     case search: ES.SearchDefinition ⇒ execute(client execute search, sender)
 

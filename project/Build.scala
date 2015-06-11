@@ -13,13 +13,9 @@ trait Resolvers {
 }
 
 trait Dependencies {
-  val compiler = "org.scala-lang" % "scala-compiler" % "2.10.5"
-  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0.7"
-  val scalazContrib = "org.typelevel" %% "scalaz-contrib-210" % "0.1.5"
   val config = "com.typesafe" % "config" % "1.3.0"
   val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
   val sbinary = "org.scala-tools.sbinary" % "sbinary_2.10" % "0.4.2"
-  val elastic4s = "com.sksamuel.elastic4s" %% "elastic4s" % "0.90.13.2"
   object akka {
     val actor = "com.typesafe.akka" %% "akka-actor" % "2.3.11"
   }
@@ -29,19 +25,17 @@ trait Dependencies {
   object apache {
     val io = "commons-io" % "commons-io" % "2.4"
   }
-
-  val specs2 = "org.specs2" %% "specs2" % "2.3.1" % "test"
-  // or "org.specs2" %% "specs2-core" % "3.6" % "test"
 }
 
 object ScalexBuild extends Build with Resolvers with Dependencies {
+  val SCALA_VERSION = "2.11.6"
 
   private val buildSettings = Defaults.defaultSettings ++ Seq(
     offline := false,
     organization := "org.scalex",
     name := "scalex",
     version := "3.0-SNAPSHOT",
-    scalaVersion := "2.10.5", // or "2.11.6"
+    scalaVersion := SCALA_VERSION,
     libraryDependencies ++= Seq(config),
     // libraryDependencies in test := Seq(specs2),
     sources in doc in Compile := List(),
@@ -59,12 +53,18 @@ object ScalexBuild extends Build with Resolvers with Dependencies {
 
   lazy val scalex = Project("scalex", file("."), settings = buildSettings).settings(
     libraryDependencies ++= Seq(
-      compiler, config, scalaz, scalazContrib,
+      "org.scala-lang" % "scala-compiler" % SCALA_VERSION,
+      config,
+      "org.scalaz" %% "scalaz-core" % "7.1.2",
+      "org.typelevel" %% "scalaz-contrib-210" % "0.2",
       "com.github.zafarkhaja" % "java-semver" % "0.9.0",
-      scopt, sbinary, elastic4s, akka.actor, play.json,
-      apache.io, specs2,
-      "com.typesafe.akka" % "akka-http-core-experimental_2.10" % "1.0-RC3",
-      "com.typesafe.akka" % "akka-http-experimental_2.10" % "1.0-RC3",
+      scopt, sbinary,
+      "com.sksamuel.elastic4s" %% "elastic4s" % "1.2.3.0",
+      akka.actor, play.json,
+      apache.io,
+      "org.specs2" %% "specs2-core" % "3.6" % "test",
+      "com.typesafe.akka" %% "akka-http-core-experimental" % "1.0-RC3",
+      "com.typesafe.akka" %% "akka-http-experimental" % "1.0-RC3",
       "com.typesafe.akka" %% "akka-stream-experimental" % "1.0-RC3")
   )
 }

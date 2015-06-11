@@ -2,7 +2,7 @@ package org.scalex
 package search
 package text
 
-import com.sksamuel.elastic4s.source.Source
+import com.sksamuel.elastic4s.source.DocumentSource
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
@@ -14,7 +14,7 @@ private[text] object DocumentToElastic extends org.scalex.util.ScalexJson {
 
   private val f = Index.fields
 
-  def apply(doc: Doc): (String, Source) = {
+  def apply(doc: Doc): (String, DocumentSource) = {
 
     def writeValueParam(o: ValueParam): JsObject = Json.obj(
       f.name -> o.name,

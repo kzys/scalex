@@ -2,8 +2,9 @@ package org.scalex
 package search
 package text
 
+import com.sksamuel.elastic4s.mappings.FieldType.StringType
 import com.sksamuel.elastic4s.{ ElasticDsl => ES }
-import com.sksamuel.elastic4s.mapping.FieldType._
+import com.sksamuel.elastic4s.mappings.FieldType._
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 

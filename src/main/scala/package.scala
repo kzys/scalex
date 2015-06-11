@@ -12,7 +12,7 @@ package object scalex
     with syntax.std.ToAllStdOps // syntax associated with standard library types
     with IdInstances // Identity type and instances
     with contrib.std.TryInstances
-    with contrib.std.FutureInstances {
+    with scalaz.std.FutureInstances {
 
   type Token = String
   type Tokens = Set[Token]

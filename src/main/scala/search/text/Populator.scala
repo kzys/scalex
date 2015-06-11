@@ -42,7 +42,7 @@ private[text] object Populator extends scalaz.NonEmptyListFunctions {
 
     (Future.traverse(selector.all) { p ⇒
       isIndexed(p) flatMap { indexed ⇒
-        if (indexed) fuccess()
+        if (indexed) fuccess(())
         else index(p)
       }
     }).void
