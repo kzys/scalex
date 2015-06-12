@@ -54,7 +54,16 @@ http {
 
         #access_log  /var/log/nginx/host.access.log  main;
 
-        location / {
+        location = / {
+            root /home/ec2-user/scalex-web;
+            index index.html;
+        }
+
+        location ~ .+\.(html|js|css) {
+            root /home/ec2-user/scalex-web;
+        }
+
+        location /app {
             proxy_pass http://app;
         }
 
