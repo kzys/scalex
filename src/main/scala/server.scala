@@ -3,6 +3,7 @@ package server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.HttpResponse
+import akka.http.scaladsl.model.headers.`Content-Type`
 import akka.http.scaladsl.server.{RequestContext, Route}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorFlowMaterializer
@@ -27,7 +28,9 @@ class Server {
       case Success(res) =>
         res.fold(
           err => ctx.complete(HttpResponse(BadRequest, entity = err.toString)),
-          res => ctx.complete(HttpResponse(OK, entity = Json.toJson(res).toString))
+          res => ctx.complete(HttpResponse(OK,
+            headers = List(`Content-Type`("application/json")),
+            entity = Json.toJson(res).toString))
         )
       case Failure(err) =>
         ctx.complete(HttpResponse(
