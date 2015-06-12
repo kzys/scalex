@@ -24,7 +24,7 @@ class Server {
     import play.api.libs.json._
     import org.scalex.search.result.Writer.resultsWrites
 
-    Try(Await.result(searcher("map"), 20.second)) match {
+    Try(Await.result(searcher(q), 20.second)) match {
       case Success(res) =>
         res.fold(
           err => ctx.complete(HttpResponse(BadRequest, entity = err.toString)),
