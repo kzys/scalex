@@ -10,6 +10,7 @@ class VersionSpec extends Specification {
         a.minor must_== 2
         a.patch must_== 3
         a.shows must_== "1.2.3"
+        a.toString must_== "1.2.3"
 
         val b = Version.parse("1.2.2").right.get
         a must be greaterThan(b)

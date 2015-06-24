@@ -10,7 +10,9 @@ class Version private[Version] (v: semver.Version) extends Ordered[Version] {
   val patch = javaVersion.getPatchVersion
 
   def compare(other: Version) = javaVersion.compareTo(other.javaVersion)
-  def shows = javaVersion.toString
+
+  override def toString = javaVersion.toString
+  def shows = this.toString
 }
 
 object Version {
