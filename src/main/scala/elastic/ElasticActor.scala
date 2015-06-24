@@ -82,7 +82,9 @@ private[scalex] final class ElasticActor(
 
   private def instanciateElasticClient = {
     println("[search] Start elastic client")
-    ElasticClient.local ~ { c ⇒
+    // Or ElasticClient.local
+    val client = ElasticClient.remote(config getString "host", config getInt "port")
+    client ~ { c ⇒
       try {
         // TODO what about indexSettings??
         c execute { ES.create index indexName }
