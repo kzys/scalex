@@ -53,8 +53,7 @@ private[scalex] final class ElasticActor(
     case api.IndexMany(typeName, docs) ⇒
       val commands = docs map {
         case (id, source) ⇒ {
-          val json = JsObject(Seq("id" -> JsString(id), "source" -> source))
-          ES.index into s"$indexName/$typeName" doc (JsonDocumentSource(Json.stringify(json)))
+          ES.index into s"$indexName/$typeName" id id doc JsonDocumentSource(Json.stringify(source))
         }
       }
       client execute { bulk(commands: _*) }
