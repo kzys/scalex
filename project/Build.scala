@@ -59,7 +59,7 @@ object ScalexBuild extends Build with Resolvers with Dependencies {
       "org.typelevel" %% "scalaz-contrib-210" % "0.2",
       "com.github.zafarkhaja" % "java-semver" % "0.9.0",
       scopt, sbinary,
-      "com.sksamuel.elastic4s" %% "elastic4s" % "1.3.3",
+      "com.sksamuel.elastic4s" %% "elastic4s-core" % "1.6.0",
       akka.actor, play.json,
       apache.io,
       "org.specs2" %% "specs2-core" % "3.6" % "test",
