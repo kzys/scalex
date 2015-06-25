@@ -1,6 +1,19 @@
 - hosts: scalex-servers
   remote_user: ec2-user
   tasks:
+
+  - name: Use Elasticsearch's repos
+    sudo: yes
+    copy: src=elasticsearch.repo dest=/etc/yum.repos.d/
+
+  - name: Install Elasticsearch
+    sudo: yes
+    yum: name=elasticsearch state=present
+
+  - name: Start Elasticsearch
+    service: name=elasticsearch state=started
+    sudo: yes
+
   - name: Install Nginx
     sudo: yes
     yum: name=nginx state=present
