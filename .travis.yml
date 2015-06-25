@@ -6,6 +6,6 @@ scala:
 script:
   - sbt clean coverage test
   - sbt assembly
-  - java -Dscala.usejavacp=true -jar $PWD/target/scala-2.11/scalex-assembly-3.0-SNAPSHOT.jar index scalex 3.0.0 -input-dir $PWD/src/main/scala
+  - java -Dscala.usejavacp=true -jar $PWD/target/scala-2.11/scalex-assembly-3.0-SNAPSHOT.jar index --name scalex --version 3.0.0 --directory $PWD/src/main/scala
 after_success:
   - sbt coveralls

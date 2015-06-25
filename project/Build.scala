@@ -14,7 +14,6 @@ trait Resolvers {
 
 trait Dependencies {
   val config = "com.typesafe" % "config" % "1.3.0"
-  val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
   val sbinary = "org.scala-tools.sbinary" % "sbinary_2.10" % "0.4.2"
   object akka {
     val actor = "com.typesafe.akka" %% "akka-actor" % "2.3.11"
@@ -58,7 +57,8 @@ object ScalexBuild extends Build with Resolvers with Dependencies {
       "org.scalaz" %% "scalaz-core" % "7.1.2",
       "org.typelevel" %% "scalaz-contrib-210" % "0.2",
       "com.github.zafarkhaja" % "java-semver" % "0.9.0",
-      scopt, sbinary,
+      "com.beust" % "jcommander" %  "1.30",
+      sbinary,
       "com.sksamuel.elastic4s" %% "elastic4s-core" % "1.6.0",
       akka.actor,
       play.json.exclude("org.joda", "joda-convert"),

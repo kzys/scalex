@@ -1,46 +1,61 @@
 package org.scalex
 package cli
 
-import scala.concurrent.duration._
-import scala.concurrent.{ Future, Await }
-import scala.util.{ Try, Success, Failure }
+import com.beust.jcommander.{Parameters, ParameterException, JCommander, Parameter}
 
 object Main {
-  case class MainConfig(port: Int = -1)
-
-  def main(args: Array[String]): Unit = {
-    val parser = new scopt.OptionParser[MainConfig]("scalex") {
-      opt[Int]("listen") action {
-        (x, config) => config.copy(port = x)
-      }
-    }
-    parser.parse(args, MainConfig()) match {
-      case Some(config) if config.port != -1 => {
-        (new server.Server).run(config.port)
-        return
-      }
-      case None =>
-        println("err")
-    }
-
-    sys exit {
-      Await.result(process(args) map (_ ⇒ 0) recover {
-        case e: IllegalArgumentException ⇒ {
-          println("! %s: %s".format("Illegal argument", e.getMessage))
-          1
-        }
-        case e: Exception ⇒ {
-          println("! " + e)
-          1
-        }
-      }, 1 hour)
-    }
+  class GeneralConfig {
+    @Parameter(names = Array("--help"))
+    var help: Boolean = false
   }
 
-  private def process(args: Array[String]): Fu[Unit] = (args.toList match {
-    // TODO real option to set optional scaladoc url
-    case "index" :: name :: version :: rest ⇒ Future {
-      index Indexer api.Index(name, version, Some("http://www.scala-lang.org/api/2.10.3"), rest)
+  @Parameters(commandNames = Array("http"))
+  class HttpConfig {
+    @Parameter(names = Array("--port"))
+    var port: Int = 0
+  }
+
+  @Parameters(commandNames = Array("index"))
+  class IndexConfig {
+    @Parameter(names = Array("--name"))
+    var name: String = ""
+
+    @Parameter(names = Array("--version"))
+    var version: String = ""
+
+    @Parameter(names = Array("--directory"))
+    var directory: String = ""
+  }
+
+  def main(args: Array[String]): Unit = {
+    val config = new GeneralConfig
+    val parser = new JCommander
+    parser.addObject(config)
+
+    val httpConfig = new HttpConfig
+    parser.addCommand(httpConfig)
+
+    val indexConfig = new IndexConfig
+    parser.addCommand(indexConfig)
+
+    try {
+      parser.parse(args: _*)
+    } catch {
+      case e: ParameterException =>
+        println(e.getLocalizedMessage)
+        println(parser.usage)
+        sys.exit(1)
     }
-  }).void
+
+    parser.getParsedCommand match {
+      case "index" =>
+        index Indexer api.Index(
+          indexConfig.name, indexConfig.version, Some("http://www.scala-lang.org/api/2.10.3"),
+          List("-input-dir", indexConfig.directory)
+        )
+      case "http" =>
+        (new server.Server).run(httpConfig.port)
+      case _ => ???
+    }
+  }
 }
