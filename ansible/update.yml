@@ -2,6 +2,10 @@
   remote_user: ec2-user
   tasks:
 
+  - name: Install Git
+    sudo: yes
+    yum: name=git state=present
+
   - name: Use Elasticsearch's repos
     sudo: yes
     copy: src=elasticsearch.repo dest=/etc/yum.repos.d/
