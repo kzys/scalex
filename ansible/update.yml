@@ -36,6 +36,11 @@
     command: update-alternatives --set java /usr/lib/jvm/jre-1.8.0-openjdk.x86_64/bin/java
   - name: Clone scalex-web
     git: repo=https://github.com/kzys/scalex-web.git dest=~ec2-user/scalex-web
+
   - synchronize: src=../target/scala-2.11/scalex-assembly-3.0-SNAPSHOT.jar dest=~ec2-user/scalex-assembly-3.0-SNAPSHOT.jar
+
+  - name: Copy scalex_3.0.0
+    copy: src=../scalex_3.0.0.scalex dest=~ec2-user
+
   - copy: src=run-scalex dest=~ec2-user mode=u+x
   - command: ~ec2-user/run-scalex
