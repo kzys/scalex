@@ -39,9 +39,6 @@
 
   - synchronize: src=../target/scala-2.11/scalex-assembly-3.0-SNAPSHOT.jar dest=~ec2-user/scalex-assembly-3.0-SNAPSHOT.jar
 
-  - name: Copy scalex_3.0.0
-    copy: src=../scalex_3.0.0.scalex dest=~ec2-user
-
   - name: Make ec2-user's directory executable
     file: path=~ec2-user state=directory mode=o+rx
 
@@ -51,5 +48,9 @@
   - name: Make scalex-web's files readable
     file: path=~ec2-user/scalex-web state=directory mode=o+r recurse=yes
 
+  - name: Copy scala-library_2.11.7
+    copy: src=../scala-library_2.11.7.scalex dest=~ec2-user
+
   - copy: src=run-scalex dest=~ec2-user mode=u+x
   - command: ~ec2-user/run-scalex
+
