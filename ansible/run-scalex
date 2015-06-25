@@ -7,5 +7,5 @@ if [ -e $PIDFILE ]; then
     kill $(cat $PIDFILE) || echo "Failed to kill"
 fi
 
-nohup java -Dscala.usejavacp=true -jar scalex-assembly-3.0-SNAPSHOT.jar http --port 8000 > stdout.log 2> stderr.log &
+nohup java -Xms256m -Xmx3g -Dscala.usejavacp=true -jar scalex-assembly-3.0-SNAPSHOT.jar http --port 8000 > stdout.log 2> stderr.log &
 echo $! > $PIDFILE
